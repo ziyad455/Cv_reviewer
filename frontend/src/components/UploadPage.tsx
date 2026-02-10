@@ -1,4 +1,4 @@
-import { useState, useRef, DragEvent } from 'react';
+import { useState, useRef, type DragEvent, type ChangeEvent } from 'react';
 
 interface UploadPageProps {
     onAnalyze: (file: File) => void;
@@ -18,7 +18,7 @@ export default function UploadPage({ onAnalyze, isAnalyzing, error }: UploadPage
         }
     };
 
-    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
         if (e.target.files && e.target.files[0]) {
             handleFileSelect(e.target.files[0]);
         }
@@ -81,8 +81,8 @@ export default function UploadPage({ onAnalyze, isAnalyzing, error }: UploadPage
                             {/* Drop Zone */}
                             <div
                                 className={`group relative border-2 border-dashed rounded-xl transition-all duration-300 p-12 text-center drop-zone-pattern cursor-pointer ${isDragging
-                                        ? 'border-[#135bec] bg-[#135bec]/15'
-                                        : 'border-[#135bec]/30 bg-[#135bec]/5 hover:bg-[#135bec]/10'
+                                    ? 'border-[#135bec] bg-[#135bec]/15'
+                                    : 'border-[#135bec]/30 bg-[#135bec]/5 hover:bg-[#135bec]/10'
                                     }`}
                                 onDragOver={handleDragOver}
                                 onDragLeave={handleDragLeave}
