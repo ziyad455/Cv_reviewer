@@ -168,17 +168,7 @@ export default function DashboardPage({ result, onReset }: DashboardPageProps) {
                             </div>
 
                             {/* CV Preview Segment */}
-                            <div className="pt-6 border-t border-slate-100">
-                                <h3 className="text-sm font-semibold text-slate-700 mb-4 text-center">CV Preview Segment</h3>
-                                <div className="bg-slate-50 p-4 rounded-lg border border-slate-200 relative">
-                                    <p className="text-[11px] leading-relaxed text-slate-400 font-mono whitespace-pre-wrap">
-                                        {analysis.skills.substring(0, 300)}{analysis.skills.length > 300 ? '...' : ''}
-                                    </p>
-                                    <div className="absolute bottom-1 right-2 text-[9px] uppercase tracking-widest text-slate-300">
-                                        Contextual Analysis
-                                    </div>
-                                </div>
-                            </div>
+
                         </div>
                     </div>
                 </div>
