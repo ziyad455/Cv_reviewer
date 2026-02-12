@@ -10,20 +10,7 @@ export default function Header() {
                         CV<span className="text-[#135bec]">Reviewer</span>
                     </span>
                 </div>
-                <nav className="hidden md:flex items-center gap-8 text-sm font-medium text-slate-600">
-                    <a className="hover:text-[#135bec] transition-colors" href="#">How it Works</a>
-                    <a className="hover:text-[#135bec] transition-colors" href="#">Pricing</a>
-                    <a className="hover:text-[#135bec] transition-colors" href="#">Enterprise</a>
-                    <a className="hover:text-[#135bec] transition-colors" href="#">Help</a>
-                </nav>
-                <div className="flex items-center gap-4">
-                    <button className="px-4 py-2 text-sm font-semibold text-slate-700 hover:text-[#135bec] transition-colors">
-                        Sign In
-                    </button>
-                    <button className="bg-[#135bec] hover:bg-[#135bec]/90 text-white px-6 py-2.5 rounded-lg text-sm font-semibold transition-all shadow-lg shadow-[#135bec]/20">
-                        Get Started
-                    </button>
-                </div>
+
             </div>
         </header>
     );
