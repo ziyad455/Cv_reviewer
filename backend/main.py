@@ -66,15 +66,19 @@ feedback_prompt = PromptTemplate(
 # New dynamic scores prompt
 scores_prompt = PromptTemplate(
     input_variables=["cv_text"],
-    template="""Analyze the CV and provide a score from 1 to 100 for each of the following categories:
-1. Technical Skills
-2. Soft Skills
-3. Impact (how well results are described)
-4. ATS Rank (how well it would pass automated filters)
-5. Clarity (formatting and readability)
+    template="""Analyze the CV and provide a score from 1 to 100 for each of the following categories. 
+BE CRITICAL AND STRICT. Do NOT give high scores unless they are exceptionally well-deserved. 
+Be 'mean' but reasonable—if a section is weak, lackluster, or generic, grade it harshly.
+
+Categories to score:
+1. Technical Skills (Depth and relevance of tech stack)
+2. Soft Skills (Evidence of leadership, communication, etc.)
+3. Impact (Quantifiable results using metrics like %, $, or time saved)
+4. ATS Rank (Optimization for automated filters)
+5. Clarity (Brevity, formatting, and lack of 'fluff')
 
 Return ONLY a JSON object with these keys: "technical", "soft_skills", "impact", "ats_rank", "clarity". No other text.
-Example: {"technical": 85, "soft_skills": 70, "impact": 90, "ats_rank": 75, "clarity": 95}
+Example: {{"technical": 45, "soft_skills": 60, "impact": 30, "ats_rank": 55, "clarity": 70}}
 
 CV Content:
 {cv_text}"""
