@@ -63,11 +63,29 @@ feedback_prompt = PromptTemplate(
     template="Provide constructive feedback to improve this CV. Focus on formatting, clarity, and highlighting key experiences:\n\n{cv_text}"
 )
 
+# New dynamic scores prompt
+scores_prompt = PromptTemplate(
+    input_variables=["cv_text"],
+    template="""Analyze the CV and provide a score from 1 to 100 for each of the following categories:
+1. Technical Skills
+2. Soft Skills
+3. Impact (how well results are described)
+4. ATS Rank (how well it would pass automated filters)
+5. Clarity (formatting and readability)
+
+Return ONLY a JSON object with these keys: "technical", "soft_skills", "impact", "ats_rank", "clarity". No other text.
+Example: {"technical": 85, "soft_skills": 70, "impact": 90, "ats_rank": 75, "clarity": 95}
+
+CV Content:
+{cv_text}"""
+)
+
 # Chains using LCEL (Prompt | LLM)
 summary_chain = summary_prompt | hf_llm
 name_chain = name_prompt | hf_llm
 skills_chain = skills_prompt | hf_llm
 feedback_chain = feedback_prompt | hf_llm
+scores_chain = scores_prompt | hf_llm
 
 # --- Routes ---
 
@@ -103,12 +121,27 @@ def analyze_cv():
         name_response = name_chain.invoke({"cv_text": cv_text})
         skills_response = skills_chain.invoke({"cv_text": cv_text})
         feedback_response = feedback_chain.invoke({"cv_text": cv_text})
+        scores_response = scores_chain.invoke({"cv_text": cv_text})
 
         # Extract content from AIMessage
         summary = summary_response.content if hasattr(summary_response, 'content') else str(summary_response)
         candidate_name = name_response.content if hasattr(name_response, 'content') else str(name_response)
         skills = skills_response.content if hasattr(skills_response, 'content') else str(skills_response)
         feedback = feedback_response.content if hasattr(feedback_response, 'content') else str(feedback_response)
+        scores_raw = scores_response.content if hasattr(scores_response, 'content') else str(scores_response)
+
+        # Parse scores
+        import json
+        import re
+        try:
+            # Try to find JSON in the response
+            json_match = re.search(r'\{.*\}', scores_raw, re.DOTALL)
+            if json_match:
+                scores_data = json.loads(json_match.group(0))
+            else:
+                scores_data = {"technical": 80, "soft_skills": 80, "impact": 80, "ats_rank": 80, "clarity": 80}
+        except:
+            scores_data = {"technical": 80, "soft_skills": 80, "impact": 80, "ats_rank": 80, "clarity": 80}
 
         # Basic cleanup of candidate name
         candidate_name = candidate_name.strip()
@@ -119,7 +152,8 @@ def analyze_cv():
             "analysis": {
                 "summary": summary,
                 "skills": skills,
-                "feedback": feedback
+                "feedback": feedback,
+                "scores": scores_data
             }
         })
 

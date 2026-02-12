@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { Toaster } from 'sonner';
 import Lenis from 'lenis';
 import './App.css';
 import Header from './components/Header';
@@ -14,6 +15,13 @@ interface AnalysisResult {
     summary: string;
     skills: string;
     feedback: string;
+    scores: {
+      technical: number;
+      soft_skills: number;
+      impact: number;
+      ats_rank: number;
+      clarity: number;
+    };
   };
 }
 
@@ -71,6 +79,7 @@ function App() {
 
   return (
     <div className="bg-background text-foreground min-h-screen selection:bg-primary/20 selection:text-primary overflow-x-hidden">
+      <Toaster position="top-right" richColors />
       <Header />
       <main className="relative z-10">
         <AnimatePresence mode="wait">
