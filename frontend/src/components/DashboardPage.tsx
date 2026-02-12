@@ -1,5 +1,6 @@
 interface AnalysisResult {
     filename: string;
+    candidate_name: string;
     analysis: {
         summary: string;
         skills: string;
@@ -13,7 +14,7 @@ interface DashboardPageProps {
 }
 
 export default function DashboardPage({ result, onReset }: DashboardPageProps) {
-    const { filename, analysis } = result;
+    const { filename, candidate_name, analysis } = result;
 
     // Parse skills into categories (best effort from plain text)
     const skillLines = analysis.skills
@@ -41,7 +42,7 @@ export default function DashboardPage({ result, onReset }: DashboardPageProps) {
                 <div>
                     <h1 className="text-2xl font-bold text-slate-900">Analysis Results</h1>
                     <p className="text-slate-500">
-                        AI Review completed for <span className="font-medium">{filename}</span>
+                        AI Review completed for <span className="font-medium">{candidate_name || filename}</span>
                     </p>
                 </div>
                 <div className="flex gap-3">
@@ -87,7 +88,7 @@ export default function DashboardPage({ result, onReset }: DashboardPageProps) {
                                 </div>
                             </div>
                             <h2 className="text-xl font-bold text-slate-900">CV Analysis</h2>
-                            <p className="text-[#135bec] font-medium text-sm">{filename}</p>
+                            <p className="text-[#135bec] font-medium text-sm">{candidate_name || filename}</p>
                         </div>
 
                         {/* Score Bars */}

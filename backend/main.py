@@ -48,6 +48,11 @@ summary_prompt = PromptTemplate(
     template="Summarize the following CV into a concise professional summary:\n\n{cv_text}"
 )
 
+name_prompt = PromptTemplate(
+    input_variables=["cv_text"],
+    template="Extract ONLY the full name of the person this CV belongs to. Return only the name, nothing else.\n\n{cv_text}"
+)
+
 skills_prompt = PromptTemplate(
     input_variables=["cv_text"],
     template="Extract all skills, programming languages, and tools from this CV:\n\n{cv_text}"
@@ -60,6 +65,7 @@ feedback_prompt = PromptTemplate(
 
 # Chains using LCEL (Prompt | LLM)
 summary_chain = summary_prompt | hf_llm
+name_chain = name_prompt | hf_llm
 skills_chain = skills_prompt | hf_llm
 feedback_chain = feedback_prompt | hf_llm
 
@@ -94,16 +100,22 @@ def analyze_cv():
 
         # Run Analysis
         summary_response = summary_chain.invoke({"cv_text": cv_text})
+        name_response = name_chain.invoke({"cv_text": cv_text})
         skills_response = skills_chain.invoke({"cv_text": cv_text})
         feedback_response = feedback_chain.invoke({"cv_text": cv_text})
 
         # Extract content from AIMessage
         summary = summary_response.content if hasattr(summary_response, 'content') else str(summary_response)
+        candidate_name = name_response.content if hasattr(name_response, 'content') else str(name_response)
         skills = skills_response.content if hasattr(skills_response, 'content') else str(skills_response)
         feedback = feedback_response.content if hasattr(feedback_response, 'content') else str(feedback_response)
 
+        # Basic cleanup of candidate name
+        candidate_name = candidate_name.strip()
+
         return jsonify({
             "filename": file.filename,
+            "candidate_name": candidate_name,
             "analysis": {
                 "summary": summary,
                 "skills": skills,

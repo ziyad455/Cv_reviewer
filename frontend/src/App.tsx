@@ -7,6 +7,7 @@ import DashboardPage from './components/DashboardPage';
 
 interface AnalysisResult {
   filename: string;
+  candidate_name: string;
   analysis: {
     summary: string;
     skills: string;
