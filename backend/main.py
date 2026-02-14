@@ -45,7 +45,10 @@ hf_llm = ChatHuggingFace(llm=endpoint)
 # Prompts
 summary_prompt = PromptTemplate(
     input_variables=["cv_text"],
-    template="Summarize the following CV into a concise professional summary:\n\n{cv_text}"
+    template="""Summarize the following CV into a concise professional summary. 
+Ensure the summary is objective, professional, and highlights the candidate's core value proposition.
+    
+{cv_text}"""
 )
 
 name_prompt = PromptTemplate(
@@ -60,15 +63,28 @@ skills_prompt = PromptTemplate(
 
 feedback_prompt = PromptTemplate(
     input_variables=["cv_text"],
-    template="Provide constructive feedback to improve this CV. Focus on formatting, clarity, and highlighting key experiences:\n\n{cv_text}"
+    template="""Provide professional and realistic feedback to improve this CV. 
+Focus on:
+1. Formatting and visual hierarchy.
+2. Clarity and conciseness of language.
+3. Impact and accomplishments (quantified results).
+4. Grammar and structural integrity.
+
+Be honest and direct. If the structure is poor or there are grammatical errors, point them out clearly.
+
+{cv_text}"""
 )
 
 # New dynamic scores prompt
 scores_prompt = PromptTemplate(
     input_variables=["cv_text"],
-    template="""Analyze the CV and provide a score from 1 to 100 for each of the following categories. 
-BE CRITICAL AND STRICT. Do NOT give high scores unless they are exceptionally well-deserved. 
-Be 'mean' but reasonable—if a section is weak, lackluster, or generic, grade it harshly.
+    template="""Analyze the CV and provide a score from 1 to 100 for each category listed below.
+
+SCORING CRITERIA:
+- BE REALISTIC AND PROFESSIONAL. 
+- If there are grammatical errors, spelling mistakes, or poor structural organization, assign LOW scores (below 50).
+- For a solid, well-written CV that meets professional standards, the score should generally cap at 80. Only exceed 80 for truly exceptional, world-class candidates with outstanding metrics and pedigree.
+- Be objective: evaluate the depth of technical skills, evidence of soft skills, and quantifiable impact.
 
 Categories to score:
 1. Technical Skills (Depth and relevance of tech stack)
@@ -84,7 +100,7 @@ CV Content:
 {cv_text}"""
 )
 
-# Chains using LCEL (Prompt | LLM)
+# Chains 
 summary_chain = summary_prompt | hf_llm
 name_chain = name_prompt | hf_llm
 skills_chain = skills_prompt | hf_llm

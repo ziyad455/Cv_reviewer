@@ -55,17 +55,6 @@ export default function Header() {
                 </div>
 
                 <div className="hidden md:flex items-center gap-8">
-                    <nav className="flex items-center gap-6">
-                        {['Features', 'Pricing', 'Documentation'].map((item) => (
-                            <a
-                                key={item}
-                                href={`#${item.toLowerCase()}`}
-                                className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors duration-200"
-                            >
-                                {item}
-                            </a>
-                        ))}
-                    </nav>
                     <button className="px-5 py-2.5 bg-foreground text-background rounded-full text-sm font-semibold hover:bg-foreground/90 transition-all duration-200 hover:scale-105 active:scale-95 shadow-lg shadow-black/5">
                         Get Started
                     </button>
