@@ -26,13 +26,12 @@ export default function LoadingAnalysis() {
         // Simulated progress
         const progressInterval = setInterval(() => {
             setProgress((prev) => {
-                if (prev >= 96) return prev;
-                // Much slower progression to simulate deep analysis
-                // Take roughly 15-20s to reach ~90%
-                const increment = Math.max(0.05, (100 - prev) / 300) + (Math.random() * 0.05);
-                return Math.min(96, prev + increment);
+                if (prev >= 98) return prev;
+                // Faster progression to reach ~80-90% in 10-15 seconds
+                const increment = Math.max(0.15, (100 - prev) / 80) + (Math.random() * 0.1);
+                return Math.min(98, prev + increment);
             });
-        }, 120);
+        }, 100);
 
         return () => {
             clearInterval(messageInterval);
