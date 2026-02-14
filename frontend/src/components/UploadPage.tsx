@@ -138,8 +138,8 @@ export default function UploadPage({ onAnalyze, isAnalyzing, error }: UploadPage
                                         animate={{ opacity: 1 }}
                                         exit={{ opacity: 0 }}
                                         className={`group relative border-2 border-dashed rounded-[1.5rem] transition-all duration-500 p-12 text-center drop-zone-pattern cursor-pointer ${isDragging
-                                                ? 'border-primary bg-primary/5 scale-[0.98]'
-                                                : 'border-border hover:border-primary/50 hover:bg-secondary/50'
+                                            ? 'border-primary bg-primary/5 scale-[0.98]'
+                                            : 'border-border hover:border-primary/50 hover:bg-secondary/50'
                                             }`}
                                         onDragOver={handleDragOver}
                                         onDragLeave={handleDragLeave}
@@ -200,14 +200,7 @@ export default function UploadPage({ onAnalyze, isAnalyzing, error }: UploadPage
                                                 disabled={isAnalyzing}
                                                 className="flex-1 px-8 py-4 rounded-2xl bg-primary text-white font-bold shadow-xl shadow-primary/20 hover:shadow-primary/40 hover:scale-[1.02] active:scale-[0.98] transition-all flex items-center justify-center gap-3 disabled:opacity-50"
                                             >
-                                                {isAnalyzing ? (
-                                                    <div className="flex items-center gap-3">
-                                                        <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                                                        Analyzing...
-                                                    </div>
-                                                ) : (
-                                                    <> <Zap className="w-5 h-5 fill-current" /> Analyze Now </>
-                                                )}
+                                                <Zap className="w-5 h-5 fill-current" /> Analyze Now
                                             </button>
                                         </div>
                                     </motion.div>

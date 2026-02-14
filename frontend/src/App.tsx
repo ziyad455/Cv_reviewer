@@ -7,6 +7,7 @@ import Header from './components/Header';
 import Footer from './components/Footer';
 import UploadPage from './components/UploadPage';
 import DashboardPage from './components/DashboardPage';
+import LoadingAnalysis from './components/LoadingAnalysis';
 
 interface AnalysisResult {
   filename: string;
@@ -83,7 +84,17 @@ function App() {
       <Header />
       <main className="relative z-10">
         <AnimatePresence mode="wait">
-          {result ? (
+          {isAnalyzing ? (
+            <motion.div
+              key="loading"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.4 }}
+            >
+              <LoadingAnalysis />
+            </motion.div>
+          ) : result ? (
             <motion.div
               key="dashboard"
               initial={{ opacity: 0, y: 20 }}
